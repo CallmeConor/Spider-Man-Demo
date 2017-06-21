@@ -11,19 +11,17 @@ public class Climbing : MonoBehaviour
 
     bool _isClimbing;
 
-    // Init
     private void Start()
     {
         cdr = GetComponent<BoxCollider>();
         rb = GetComponent<Rigidbody>();
 
-        height = cdr.size.y;
+        height = transform.localScale.y;
         Debug.Log("Height: " + height);
     }
 
     private void Update()
     {
-        // Basic ladder climbing
         if (!_isClimbing)
             transform.position += new Vector3(Input.GetAxis("Horizontal") * 5f * Time.deltaTime, 0f, Input.GetAxis("Vertical") * 5f * Time.deltaTime);
         else
@@ -40,18 +38,13 @@ public class Climbing : MonoBehaviour
             if (hitInfo.collider.name == "Ladder")
             {
                 Debug.Log("Hit the ladder");
-
-                // Change the boolean
                 _isClimbing = true;
-                // Turn off gravity
                 rb.useGravity = !_isClimbing;
             }
         }
         else
         {
-            // Change the boolean
             _isClimbing = false;
-            // Turn on gravity
             rb.useGravity = !_isClimbing;
         }
     }
